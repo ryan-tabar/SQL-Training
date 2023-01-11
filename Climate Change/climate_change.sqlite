@@ -1,0 +1,81 @@
+-- Running average of temperature for each state
+-- SELECT state,
+--   year,
+--   tempc,
+--   AVG(tempc) OVER (
+--     PARTITION BY state
+--     ORDER BY year ASC
+--   ) AS 'running_avg_temp'
+-- FROM state_climate;
+
+-- Lowest temperature for each state
+-- SELECT state,
+--   year,
+--   tempc,
+--   FIRST_VALUE(tempc) OVER (
+--     PARTITION BY state
+--     ORDER BY tempc ASC
+--   ) AS 'lowest_temp'
+-- FROM state_climate;
+
+-- Highest temperature for each state
+-- SELECT state,
+--   year,
+--   tempc,
+--   LAST_VALUE(tempc) OVER (
+--     PARTITION BY state
+--     ORDER BY tempc ASC
+--     RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+--   ) AS 'highest_temp'
+-- FROM state_climate;
+
+-- How temperature changed in each year of each state
+-- SELECT state,
+--   year,
+--   tempc,
+--   tempc - LAG(tempc, 1, tempc) OVER (
+--     PARTITION BY state
+--     ORDER BY year ASC
+--   ) AS 'change_in_temp'
+-- FROM state_climate;
+
+-- Ranked warmest years for each state
+-- SELECT RANK() OVER (
+--   PARTITION BY state
+--   ORDER BY tempc DESC
+-- ) AS 'warmest_rank',
+--   year,
+--   state,
+--   tempc
+-- FROM state_climate;
+
+-- Average yearly temperatures in quartiles for each state
+-- SELECT NTILE(4) OVER (
+--   PARTITION BY state
+--   ORDER BY tempc ASC
+-- ) AS 'quartile',
+--   year,
+--   state,
+--   tempc
+-- FROM state_climate;
+
+-- Average yearly temperatures in quintiles overall
+SELECT NTILE(5) OVER (
+  ORDER BY tempc ASC
+) AS 'quintile',
+  year,
+  state,
+  tempc
+FROM state_climate;
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+-- WITH popular_posts AS (
+--   SELECT *
+--   FROM posts
+--   WHERE score >= 5000
+-- )
+
+-- SELECT subreddits.name,
+--   popular_posts.title,
+--   popular_posts.score
+-- FROM subreddits
+-- JOIN popular_posts
+--   ON subreddits.id = popular_posts.subreddit_id
+-- ORDER BY 3 DESC;
+
+-- SELECT subreddits.name,
+--   posts.title,
+--   MAX(posts.score) AS 'Max Score'
+-- FROM posts
+-- JOIN subreddits
+--   ON posts.subreddit_id = subreddits.id
+-- GROUP BY subreddits.name;
+
+SELECT subreddits.name,
+  ROUND(AVG(posts.score), 2) AS 'Average Score'
+FROM subreddits
+JOIN posts
+  ON subreddits.id = posts.subreddit_id
+GROUP BY 1
+ORDER BY 2 DESC;

@@ -1,0 +1,11 @@
+SELECT *
+FROM employees
+LIMIT 10;
+
+SELECT *
+FROM projects;
+
+SELECT first_name, last_name, personality, project_name
+FROM employees
+JOIN projects
+  ON employees.current_project = project.project_id

@@ -1,0 +1,101 @@
+-- 1.)
+SELECT *
+FROM stream
+LIMIT 10;
+
+SELECT *
+FROM chat
+LIMIT 10;
+----------------
+
+-- 2.)
+-- SELECT DISTINCT game
+-- FROM stream;
+----------------
+
+-- 3.)
+-- SELECT DISTINCT channel
+-- FROM stream;
+----------------
+
+-- 4.)
+-- SELECT game, COUNT(*) AS 'viewers'
+-- FROM stream
+-- GROUP BY 1
+-- ORDER BY 2 DESC;
+----------------
+
+-- 5.)
+-- SELECT country, COUNT(*) AS 'viewers_of_LoL'
+-- FROM stream
+-- WHERE game = 'League of Legends'
+-- GROUP BY 1
+-- ORDER BY 2 DESC;
+----------------
+
+-- 6.)
+-- SELECT player, COUNT(*)
+-- FROM stream
+-- GROUP BY 1
+-- ORDER BY 2 DESC;
+----------------
+
+-- 7.)
+-- SELECT 
+--   game,
+--   CASE
+--     WHEN game = 'League of Legends'
+--       OR game = 'Dota 2'
+--       OR game = 'Heroes of the Storm'
+--       THEN 'MOBA'
+--     WHEN game = 'Counter-Strike: Global Offensive'
+--       THEN 'FPS'
+--     WHEN game = 'DayZ'
+--       OR game = 'ARK: Survival Evolved'
+--     THEN 'Survival'
+--     ELSE 'Other'
+--   END AS 'genre',
+--   COUNT(*) AS 'viewers'
+-- FROM stream
+-- GROUP BY 1
+-- ORDER BY 3 DESC;
+----------------
+
+-- 8.) How view count changes throughout the day (by the hour)
+-- WITH hourly_viewers AS (
+--   SELECT strftime('%H', time) AS 'Hour', 
+--     COUNT(*) AS 'viewers'
+--   FROM stream
+--   GROUP BY 1
+-- )
+-- SELECT Hour, 
+--   viewers,
+--   viewers - LAG(viewers, 1, viewers) OVER (
+--     ORDER BY Hour ASC
+--   ) AS 'change_in_viewers'
+-- FROM hourly_viewers;
+----------------
+
+-- 9.)
+-- SELECT time,
+--   strftime('%S', time)
+-- FROM stream
+-- GROUP BY 1
+-- LIMIT 20;
+----------------
+
+-- 10.)
+-- SELECT strftime('%H', time) AS Hour, COUNT(*) AS 'viewers'
+-- FROM stream
+-- WHERE country = 'GB'
+-- GROUP BY 1;
+----------------
+
+-- 11.)
+SELECT *
+FROM stream
+JOIN chat
+  ON stream.device_id = chat.device_id
+LIMIT 10;
+
+
